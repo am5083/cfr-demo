@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: acp-runner-node
+    runs-on: ubuntu-latest
     container:
       # gcc:13 is x86_64 with g++ and make preinstalled. AVX2/FMA support
       # depends on the host CPU; modern x86_64 servers have it.

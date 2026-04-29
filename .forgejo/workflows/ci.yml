@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: docker
+    container:
+      # gcc:13 is x86_64 with g++ and make preinstalled. AVX2/FMA support
+      # depends on the host CPU; modern x86_64 servers have it.
+      image: gcc:13
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show toolchain
+        run: |
+          $CXX --version || g++ --version
+          make --version
+
+      - name: Build demo binary
+        run: make all
+
+      - name: Build and run tests
+        run: make test
